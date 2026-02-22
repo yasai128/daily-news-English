@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily News English — Learn English Through Today's Headlines</title>
+  <meta name="description" content="Learn English through today's real news. Vocabulary, grammar, translation, and quizzes — CNN English Express style." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Source+Sans+3:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #CC0000;
+      --red-dark: #990000;
+      --red-light: #FF1A1A;
+      --navy: #0C1B33;
+      --slate: #2D3748;
+      --gray-900: #1A202C;
+      --gray-700: #4A5568;
+      --gray-500: #718096;
+      --gray-300: #CBD5E0;
+      --gray-100: #F7FAFC;
+      --gray-50: #FAFBFD;
+      --white: #FFFFFF;
+      --warm-bg: #FDF8F4;
+      --accent-gold: #D4A853;
+      --accent-blue: #2B6CB0;
+      --success: #38A169;
+      --error: #E53E3E;
+    }
+    body { background: var(--gray-50); font-family: 'Source Sans 3', 'Noto Sans JP', sans-serif; color: var(--gray-900); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    ::selection { background: rgba(204,0,0,0.15); }
+
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    .spinner { display: inline-block; animation: spin 0.8s linear infinite; }
+    .fade-up { animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 20px 20px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .logo-group { display: flex; align-items: center; gap: 14px; }
+    .logo-mark {
+      width: 48px; height: 48px;
+      background: var(--white);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 20px;
+      color: var(--red);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      letter-spacing: -0.5px;
+    }
+    .logo-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      line-height: 1.1;
+    }
+    .logo-text p {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+    .header-date {
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.18);
+      padding: 6px 14px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      letter-spacing: 0.3px;
+    }
+    .header-stripe {
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-gold), var(--red-light), var(--red), var(--red-dark));
+    }
+
+    /* ── Controls ── */
+    .controls {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 22px 20px;
+    }
+    .control-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 22px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .control-row { margin-bottom: 16px; }
+    .control-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .pill-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pill {
+      border: 2px solid var(--gray-300);
+      background: var(--white);
+      border-radius: 25px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--gray-700);
+      transition: all 0.2s;
+      font-family: 'Source Sans 3', sans-serif;
+    }
+    .pill:hover { border-color: var(--red); color: var(--red); background: rgba(204,0,0,0.03); }
+    .pill-on {
+      background: var(--red) !important;
+      color: var(--white) !important;
+      border-color: var(--red) !important;
+      box-shadow: 0 2px 8px rgba(204,0,0,0.25);
+    }
+    .fetch-btn {
+      width: 100%;
+      padding: 14px 0;
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Source Sans 3', sans-serif;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 14px rgba(204,0,0,0.2);
+      transition: all 0.25s;
+    }
+    .fetch-btn:hover { box-shadow: 0 6px 20px rgba(204,0,0,0.3); transform: translateY(-1px); }
+    .fetch-btn:disabled { opacity: 0.6; transform: none; }
+
+    /* ── Main Content ── */
+    .main { max-width: 780px; margin: 0 auto; padding: 0 20px 60px; }
+
+    .error-bar {
+      background: #FFF5F5;
+      border: 1px solid #FED7D7;
+      color: var(--error);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    /* ── Headlines Section ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .section-header .red-bar {
+      width: 4px;
+      height: 24px;
+      background: var(--red);
+      border-radius: 2px;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+    }
+
+    /* ── Article Card ── */
+    .article-card {
+      display: flex;
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+      cursor: pointer;
+      transition: all 0.25s;
+      width: 100%;
+      text-align: left;
+    }
+    .article-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .article-img {
+      width: 140px;
+      min-height: 140px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--gray-100), #edf2f7);
+    }
+    .article-img-placeholder {
+      width: 140px;
+      min-height: 140px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #FFF5F5, #FED7D7);
+      font-size: 36px;
+    }
+    .article-body { padding: 16px 18px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .article-meta { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; align-items: center; }
+    .tag-source {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--red);
+      background: #FFF5F5;
+      padding: 3px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .tag-topic {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      background: #EBF4FF;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+    .tag-date { font-size: 10px; color: var(--gray-500); }
+    .article-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.35;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .article-summary { font-size: 13px; color: var(--gray-700); line-height: 1.55; }
+    .article-cta {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── Empty State ── */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .empty-state h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 16px 0 8px;
+    }
+    .empty-state p { font-size: 14px; color: var(--gray-500); line-height: 1.7; margin-bottom: 24px; }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 340px; margin: 0 auto; }
+    .feature-chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px;
+      background: var(--gray-50);
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.04);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    /* ── Loading ── */
+    .loading-box {
+      text-align: center;
+      padding: 50px 20px;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .loading-box h4 { font-size: 17px; font-weight: 700; color: var(--navy); margin: 16px 0 4px; }
+    .loading-box p { font-size: 13px; color: var(--gray-500); }
+    .loading-bar {
+      width: 200px;
+      height: 3px;
+      background: var(--gray-100);
+      border-radius: 3px;
+      margin: 16px auto 0;
+      overflow: hidden;
+    }
+    .loading-bar::after {
+      content: '';
+      display: block;
+      width: 60%;
+      height: 100%;
+      background: var(--red);
+      border-radius: 3px;
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+
+    /* ── Lesson View ── */
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--red);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 6px 0;
+      margin-bottom: 16px;
+      font-family: 'Source Sans 3', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+    .back-btn:hover { gap: 10px; }
+    .lesson-hero-img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .lesson-section {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 2px 10px rgba(0,0,0,0.02);
+      border: 1px solid rgba(0,0,0,0.04);
+      position: relative;
+      overflow: hidden;
+    }
+    .lesson-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+    }
+    .sec-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sec-tag::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-100);
+    }
+
+    /* Article section */
+    .sec-article::before { background: var(--red); }
+    .sec-article .sec-tag { color: var(--red); }
+    .sec-article .source-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .sec-article h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.3;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .news-body {
+      font-size: 16px;
+      line-height: 1.9;
+      color: var(--slate);
+      background: var(--gray-50);
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid var(--red);
+    }
+
+    /* Translation section */
+    .sec-translation::before { background: var(--accent-gold); }
+    .sec-translation .sec-tag { color: var(--accent-gold); }
+    .translation-text {
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--gray-700);
+      background: #FFFBF5;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent-gold);
+      font-family: 'Noto Sans JP', 'Source Sans 3', sans-serif;
+    }
+
+    /* Vocabulary section */
+    .sec-vocab::before { background: var(--red); }
+    .sec-vocab .sec-tag { color: var(--red); }
+    .vocab-card {
+      background: var(--gray-50);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--red);
+      transition: box-shadow 0.2s;
+    }
+    .vocab-card:hover { box-shadow: 0 2px 10px rgba(204,0,0,0.08); }
+    .vocab-word { font-size: 17px; font-weight: 800; color: var(--navy); }
+    .vocab-pos {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--gray-500);
+      background: var(--white);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--gray-300);
+      margin-left: 8px;
+    }
+    .vocab-pron { font-size: 13px; color: var(--red); font-weight: 600; margin: 3px 0; }
+    .vocab-meaning { font-size: 15px; font-weight: 600; color: var(--slate); margin-bottom: 6px; font-family: 'Noto Sans JP', sans-serif; }
+    .vocab-example {
+      font-size: 13px;
+      color: var(--gray-700);
+      font-style: italic;
+      background: var(--white);
+      padding: 8px 12px;
+      border-radius: 8px;
+      line-height: 1.55;
+    }
+    .vocab-example strong { color: var(--red); font-style: normal; margin-right: 4px; }
+
+    /* Grammar section */
+    .sec-grammar::before { background: var(--accent-blue); }
+    .sec-grammar .sec-tag { color: var(--accent-blue); }
+    .grammar-card {
+      background: var(--gray-50);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 10px;
+      border-left: 4px solid var(--accent-blue);
+    }
+    .grammar-pattern { font-size: 16px; font-weight: 800; color: var(--accent-blue); margin-bottom: 10px; }
+    .grammar-sentence {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--navy);
+      background: var(--white);
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      line-height: 1.55;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+    .grammar-explain { font-size: 14px; color: var(--gray-700); line-height: 1.65; margin-bottom: 4px; font-family: 'Noto Sans JP', 'Source Sans 3', sans-serif; }
+
+    /* Quiz section */
+    .sec-quiz::before { background: var(--success); }
+    .sec-quiz .sec-tag { color: var(--success); }
+    .quiz-block {
+      background: var(--gray-50);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+    .quiz-q {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+    .quiz-opt {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      border: 2px solid var(--gray-300);
+      border-radius: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--slate);
+      text-align: left;
+      font-family: 'Source Sans 3', sans-serif;
+      line-height: 1.4;
+      transition: all 0.2s;
+    }
+    .quiz-opt:hover { border-color: var(--red); background: #FFF5F5; }
+    .quiz-opt-letter {
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--gray-500);
+      min-width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gray-100);
+      border-radius: 6px;
+    }
+    .quiz-opt-correct { border-color: var(--success) !important; background: #F0FFF4 !important; }
+    .quiz-opt-wrong { border-color: var(--error) !important; background: #FFF5F5 !important; }
+    .quiz-feedback {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .quiz-feedback-ok { background: #F0FFF4; border: 1px solid #C6F6D5; }
+    .quiz-feedback-ng { background: #FFF5F5; border: 1px solid #FED7D7; }
+    .quiz-feedback strong { display: block; margin-bottom: 4px; }
+    .quiz-feedback p { color: var(--gray-700); margin: 0; font-family: 'Noto Sans JP', 'Source Sans 3', sans-serif; }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .article-card { flex-direction: column; }
+      .article-img, .article-img-placeholder { width: 100%; min-height: 180px; height: 180px; }
+      .header-date { display: none; }
+      .lesson-hero-img { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState, useCallback } = React;
+
+    const CATEGORIES = [
+      { id: "world", label: "World", emoji: "🌍" },
+      { id: "business", label: "Business", emoji: "💼" },
+      { id: "tech", label: "Tech", emoji: "🔬" },
+      { id: "sports", label: "Sports", emoji: "⚽" },
+    ];
+    const LEVELS = [
+      { id: "beginner", label: "Beginner" },
+      { id: "intermediate", label: "Intermediate" },
+      { id: "advanced", label: "Advanced" },
+    ];
+
+    function App() {
+      const [category, setCategory] = useState("world");
+      const [level, setLevel] = useState("intermediate");
+      const [articles, setArticles] = useState([]);
+      const [selArticle, setSelArticle] = useState(null);
+      const [lesson, setLesson] = useState(null);
+      const [loadingNews, setLoadingNews] = useState(false);
+      const [loadingLesson, setLoadingLesson] = useState(false);
+      const [error, setError] = useState(null);
+
+      const fetchNews = useCallback(async () => {
+        setLoadingNews(true); setError(null); setArticles([]); setSelArticle(null); setLesson(null);
+        try {
+          const res = await fetch(`/api/news?category=${category}`);
+          const data = await res.json();
+          if (data.error) throw new Error(data.error);
+          setArticles(data);
+        } catch (err) { setError(err.message); }
+        finally { setLoadingNews(false); }
+      }, [category]);
+
+      const generateLesson = useCallback(async (article) => {
+        setSelArticle(article); setLoadingLesson(true); setLesson(null);
+        try {
+          const res = await fetch("/api/lesson", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ article, level }),
+          });
+          const data = await res.json();
+          if (data.error) throw new Error(data.error);
+          setLesson({ ...data, image: article.image, source: article.source });
+        } catch (err) { setError(err.message); }
+        finally { setLoadingLesson(false); }
+      }, [level]);
+
+      return (
+        <div style={{ minHeight: "100vh", background: "var(--gray-50)" }}>
+          {/* Header */}
+          <header className="header">
+            <div className="header-inner">
+              <div className="logo-group">
+                <div className="logo-mark">EN</div>
+                <div className="logo-text">
+                  <h1>Daily News English</h1>
+                  <p>Today's Headlines</p>
+                </div>
+              </div>
+              <div className="header-date">
+                {new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" })}
+              </div>
+            </div>
+          </header>
+          <div className="header-stripe" />
+
+          {/* Controls */}
+          <div className="controls">
+            <div className="control-card">
+              <div className="control-row">
+                <label className="control-label">Category</label>
+                <div className="pill-group">
+                  {CATEGORIES.map((c) => (
+                    <button key={c.id} className={`pill ${category === c.id ? "pill-on" : ""}`} onClick={() => setCategory(c.id)}>
+                      {c.emoji} {c.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="control-row">
+                <label className="control-label">Level</label>
+                <div className="pill-group">
+                  {LEVELS.map((l) => (
+                    <button key={l.id} className={`pill ${level === l.id ? "pill-on" : ""}`} onClick={() => setLevel(l.id)}>
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <button className="fetch-btn" onClick={fetchNews} disabled={loadingNews}>
+                {loadingNews ? <><span className="spinner">⟳</span> Fetching…</> : "📰 Get Today's News"}
+              </button>
+            </div>
+          </div>
+
+          <main className="main">
+            {error && <div className="error-bar">{error}</div>}
+
+            {/* Article Cards */}
+            {articles.length > 0 && !lesson && (
+              <section className="fade-up">
+                <div className="section-header">
+                  <div className="red-bar" />
+                  <h2>Today's Headlines</h2>
+                </div>
+                {articles.map((a, i) => (
+                  <button key={i} className="article-card" onClick={() => generateLesson(a)} disabled={loadingLesson}
+                    style={{ opacity: loadingLesson && selArticle === a ? 0.5 : 1, animationDelay: `${i * 0.08}s` }}>
+                    {a.image
+                      ? <img src={a.image} alt="" className="article-img" onError={(e) => { e.target.style.display='none'; if(e.target.nextSibling) e.target.nextSibling.style.display='flex'; }} />
+                      : null}
+                    <div className="article-img-placeholder" style={{ display: a.image ? 'none' : 'flex' }}>📰</div>
+                    <div className="article-body">
+                      <div className="article-meta">
+                        <span className="tag-source">{a.source}</span>
+                        <span className="tag-topic">{a.topic}</span>
+                        {a.pubDate && <span className="tag-date">{new Date(a.pubDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>}
+                      </div>
+                      <div className="article-title">{a.title}</div>
+                      <div className="article-summary">{a.summary?.slice(0, 150)}{a.summary?.length > 150 ? "…" : ""}</div>
+                      <div className="article-cta">
+                        {loadingLesson && selArticle === a ? <span className="spinner">⟳</span> : <>Start Lesson <span>→</span></>}
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </section>
+            )}
+
+            {/* Loading */}
+            {loadingLesson && (
+              <div className="loading-box">
+                <div style={{ fontSize: 44 }} className="spinner">⟳</div>
+                <h4>Creating Your Lesson</h4>
+                <p>Building vocabulary, grammar & quiz…</p>
+                <div className="loading-bar" />
+              </div>
+            )}
+
+            {/* Lesson */}
+            {lesson && <LessonView lesson={lesson} onBack={() => setLesson(null)} />}
+
+            {/* Empty */}
+            {articles.length === 0 && !loadingNews && !error && (
+              <div className="empty-state fade-up">
+                <div style={{ fontSize: 56 }}>📰</div>
+                <h3>Learn English with Real News</h3>
+                <p>Pick a category & level, then tap<br />"Get Today's News" to start learning</p>
+                <div className="feature-grid">
+                  {["🔤 Vocabulary", "📐 Grammar", "🇯🇵 Translation", "✅ Quiz"].map((t, i) => (
+                    <div key={i} className="feature-chip">{t}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </main>
+        </div>
+      );
+    }
+
+    /* ── Lesson View ── */
+    function LessonView({ lesson, onBack }) {
+      const [qa, setQa] = useState({});
+      const [qc, setQc] = useState({});
+      const check = (qi, oi) => {
+        if (qc[qi] !== undefined) return;
+        setQa((p) => ({ ...p, [qi]: oi }));
+        setQc((p) => ({ ...p, [qi]: oi === lesson.quiz[qi].answer }));
+      };
+
+      return (
+        <div className="fade-up">
+          <button className="back-btn" onClick={onBack}>← Back to Headlines</button>
+
+          {lesson.image && <img src={lesson.image} alt="" className="lesson-hero-img" onError={(e) => e.target.style.display='none'} />}
+
+          {/* Article */}
+          <section className="lesson-section sec-article">
+            <div className="sec-tag">News Article</div>
+            {lesson.source && <div className="source-label">{lesson.source}</div>}
+            <h2>{lesson.headline}</h2>
+            <div className="news-body">{lesson.body}</div>
+          </section>
+
+          {/* Translation */}
+          <section className="lesson-section sec-translation">
+            <div className="sec-tag">Japanese Translation</div>
+            <div className="translation-text">{lesson.translation}</div>
+          </section>
+
+          {/* Vocabulary */}
+          <section className="lesson-section sec-vocab">
+            <div className="sec-tag">Key Vocabulary</div>
+            {(lesson.vocabulary || []).map((v, i) => (
+              <div key={i} className="vocab-card">
+                <div style={{ marginBottom: 4 }}>
+                  <span className="vocab-word">{v.word}</span>
+                  <span className="vocab-pos">{v.pos}</span>
+                </div>
+                <div className="vocab-pron">{v.pronunciation}</div>
+                <div className="vocab-meaning">{v.meaning}</div>
+                {v.example && <div className="vocab-example"><strong>Ex.</strong> {v.example}</div>}
+              </div>
+            ))}
+          </section>
+
+          {/* Grammar */}
+          <section className="lesson-section sec-grammar">
+            <div className="sec-tag">Grammar Points</div>
+            {(lesson.grammar || []).map((g, i) => (
+              <div key={i} className="grammar-card">
+                <div className="grammar-pattern">{g.pattern}</div>
+                <div className="grammar-sentence">"{g.sentence}"</div>
+                <div className="grammar-explain"><strong>Structure:</strong> {g.breakdown}</div>
+                <div className="grammar-explain">{g.explanation}</div>
+              </div>
+            ))}
+          </section>
+
+          {/* Quiz */}
+          {lesson.quiz?.length > 0 && (
+            <section className="lesson-section sec-quiz">
+              <div className="sec-tag">Comprehension Quiz</div>
+              {lesson.quiz.map((q, qi) => (
+                <div key={qi} className="quiz-block">
+                  <div className="quiz-q">Q{qi + 1}. {q.question}</div>
+                  <div className="quiz-opts">
+                    {q.options.map((o, oi) => {
+                      const revealed = qc[qi] !== undefined;
+                      const correct = revealed && oi === q.answer;
+                      const wrong = qa[qi] === oi && revealed && !correct;
+                      return (
+                        <button key={oi}
+                          className={`quiz-opt ${correct ? "quiz-opt-correct" : ""} ${wrong ? "quiz-opt-wrong" : ""}`}
+                          onClick={() => check(qi, oi)}>
+                          <span className="quiz-opt-letter">{String.fromCharCode(65 + oi)}</span>
+                          {o}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {qc[qi] !== undefined && (
+                    <div className={`quiz-feedback ${qc[qi] ? "quiz-feedback-ok" : "quiz-feedback-ng"}`}>
+                      <strong>{qc[qi] ? "✅ Correct!" : "❌ Incorrect"}</strong>
+                      <p>{q.explanation}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </section>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
