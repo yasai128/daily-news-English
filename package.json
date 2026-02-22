@@ -1,0 +1,6 @@
+{
+  "name": "daily-news-english",
+  "version": "2.0.0",
+  "description": "Learn English through today's news — CNN English Express style. Powered by NewsData.io + Claude Haiku.",
+  "private": true
+}
