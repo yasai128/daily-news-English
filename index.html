@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily News English — Learn English Through Today's Headlines</title>
+  <meta name="description" content="Learn English through today's real news. Vocabulary, grammar, translation, and quizzes — CNN English Express style." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #08080c; font-family: 'Segoe UI','Helvetica Neue',Arial,sans-serif; color: #e0e0e0; -webkit-font-smoothing: antialiased; }
+    ::selection { background: rgba(233,69,96,0.35); }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .spinner { display: inline-block; animation: spin 1s linear infinite; }
+    .fade-up { animation: fadeUp 0.4s ease-out both; }
+    .card-h { transition: all 0.25s; }
+    .card-h:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(233,69,96,0.12) !important; }
+    .pill-h { transition: all 0.25s; }
+    .pill-h:hover { background: rgba(233,69,96,0.15) !important; border-color: #e94560 !important; color: #fff !important; }
+    .qopt { transition: all 0.2s; }
+    .qopt:hover { border-color: #e94560 !important; background: rgba(233,69,96,0.06) !important; }
+    .img-cover { width: 100%; height: 200px; object-fit: cover; border-radius: 12px 12px 0 0; display: block; background: #1a1a2e; }
+    .img-hero { width: 100%; height: 240px; object-fit: cover; border-radius: 12px; display: block; margin-bottom: 16px; background: #1a1a2e; }
+    .img-placeholder { width: 100%; height: 200px; border-radius: 12px 12px 0 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a1a2e, #16213e); color: #444; font-size: 48px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState, useCallback, useEffect } = React;
+
+    const CATEGORIES = [
+      { id: "world", label: "World", emoji: "🌍" },
+      { id: "business", label: "Business", emoji: "💼" },
+      { id: "tech", label: "Tech", emoji: "🔬" },
+      { id: "sports", label: "Sports", emoji: "⚽" },
+    ];
+    const LEVELS = [
+      { id: "beginner", label: "Beginner" },
+      { id: "intermediate", label: "Intermediate" },
+      { id: "advanced", label: "Advanced" },
+    ];
+
+    function App() {
+      const [category, setCategory] = useState("world");
+      const [level, setLevel] = useState("intermediate");
+      const [articles, setArticles] = useState([]);
+      const [selArticle, setSelArticle] = useState(null);
+      const [lesson, setLesson] = useState(null);
+      const [loadingNews, setLoadingNews] = useState(false);
+      const [loadingLesson, setLoadingLesson] = useState(false);
+      const [error, setError] = useState(null);
+
+      const fetchNews = useCallback(async () => {
+        setLoadingNews(true); setError(null); setArticles([]); setSelArticle(null); setLesson(null);
+        try {
+          const res = await fetch(`/api/news?category=${category}`);
+          const data = await res.json();
+          if (data.error) throw new Error(data.error);
+          setArticles(data);
+        } catch (err) { setError(err.message); }
+        finally { setLoadingNews(false); }
+      }, [category]);
+
+      const generateLesson = useCallback(async (article) => {
+        setSelArticle(article); setLoadingLesson(true); setLesson(null);
+        try {
+          const res = await fetch("/api/lesson", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ article, level }),
+          });
+          const data = await res.json();
+          if (data.error) throw new Error(data.error);
+          setLesson({ ...data, image: article.image, source: article.source });
+        } catch (err) { setError(err.message); }
+        finally { setLoadingLesson(false); }
+      }, [level]);
+
+      return (
+        <div style={{ minHeight: "100vh" }}>
+          {/* Header */}
+          <header style={{ background: "linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)", borderBottom: "2px solid rgba(233,69,96,0.4)", padding: "24px 18px 20px" }}>
+            <div style={{ maxWidth: 720, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ background: "linear-gradient(135deg,#e94560,#ff6b6b)", width: 46, height: 46, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: 17, letterSpacing: 1, color: "#fff", boxShadow: "0 4px 15px rgba(233,69,96,0.4)" }}>EN</div>
+                <div>
+                  <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: "#fff" }}>Daily News English</h1>
+                  <p style={{ margin: "2px 0 0", fontSize: 11, color: "rgba(255,255,255,0.5)", letterSpacing: 2, textTransform: "uppercase" }}>Learn English Through Today's Headlines</p>
+                </div>
+              </div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", background: "rgba(255,255,255,0.07)", padding: "5px 12px", borderRadius: 20 }}>
+                {new Date().toLocaleDateString("en-US", { weekday: "short", year: "numeric", month: "short", day: "numeric" })}
+              </div>
+            </div>
+          </header>
+
+          <main style={{ maxWidth: 720, margin: "0 auto", padding: "18px 14px 50px" }}>
+            {/* Controls */}
+            <section style={{ background: "rgba(255,255,255,0.03)", borderRadius: 16, padding: 18, marginBottom: 18, border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div style={{ marginBottom: 14 }}>
+                <label style={S.label}>Category</label>
+                <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
+                  {CATEGORIES.map((c) => <button key={c.id} className="pill-h" onClick={() => setCategory(c.id)} style={{ ...S.pill, ...(category === c.id ? S.pillOn : {}) }}>{c.emoji} {c.label}</button>)}
+                </div>
+              </div>
+              <div style={{ marginBottom: 14 }}>
+                <label style={S.label}>Level</label>
+                <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
+                  {LEVELS.map((l) => <button key={l.id} className="pill-h" onClick={() => setLevel(l.id)} style={{ ...S.pill, ...(level === l.id ? S.pillOn : {}) }}>{l.label}</button>)}
+                </div>
+              </div>
+              <button onClick={fetchNews} disabled={loadingNews} style={{ ...S.btn, opacity: loadingNews ? 0.6 : 1 }}>
+                {loadingNews ? <span className="spinner">⟳</span> : "📰"}{" "}{loadingNews ? "Fetching…" : "Get Today's News"}
+              </button>
+            </section>
+
+            {error && <div style={S.error}>{error}</div>}
+
+            {/* ── CNN-style Article Cards ── */}
+            {articles.length > 0 && !lesson && (
+              <section className="fade-up">
+                <h2 style={S.secHead}>Today's Headlines</h2>
+                {articles.map((a, i) => (
+                  <button key={i} className="card-h" onClick={() => generateLesson(a)} disabled={loadingLesson}
+                    style={{ ...S.aCard, opacity: loadingLesson && selArticle === a ? 0.5 : 1, animationDelay: `${i * 0.08}s` }}>
+                    {a.image
+                      ? <img src={a.image} alt="" className="img-cover" onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling && (e.target.nextSibling.style.display = 'flex'); }} />
+                      : null}
+                    <div className="img-placeholder" style={{ display: a.image ? 'none' : 'flex' }}>📰</div>
+                    <div style={{ padding: 16 }}>
+                      <div style={{ display: "flex", gap: 6, marginBottom: 8, flexWrap: "wrap", alignItems: "center" }}>
+                        <span style={S.srcTag}>{a.source}</span>
+                        <span style={S.topicTag}>{a.topic}</span>
+                        {a.pubDate && <span style={{ fontSize: 10, color: "#555" }}>{new Date(a.pubDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>}
+                      </div>
+                      <h3 style={{ margin: "0 0 8px", fontSize: 16, fontWeight: 700, lineHeight: 1.4, color: "#e8e8e8" }}>{a.title}</h3>
+                      <p style={{ margin: 0, fontSize: 13, color: "#777", lineHeight: 1.55 }}>{a.summary?.slice(0, 180)}{a.summary?.length > 180 ? "…" : ""}</p>
+                      <div style={{ marginTop: 12, fontSize: 12, color: "#e94560", fontWeight: 600 }}>
+                        {loadingLesson && selArticle === a ? <span className="spinner">⟳</span> : "Start Lesson →"}
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </section>
+            )}
+
+            {loadingLesson && (
+              <div style={S.emptyBox}>
+                <div style={{ fontSize: 40 }} className="spinner">⟳</div>
+                <p style={{ fontSize: 16, fontWeight: 700, margin: "14px 0 4px", color: "#fff" }}>Generating Lesson…</p>
+                <p style={{ fontSize: 12, color: "#777" }}>Building vocabulary, grammar & quiz</p>
+              </div>
+            )}
+
+            {lesson && <LessonView lesson={lesson} onBack={() => setLesson(null)} />}
+
+            {articles.length === 0 && !loadingNews && !error && (
+              <div style={{ ...S.emptyBox }} className="fade-up">
+                <div style={{ fontSize: 52, marginBottom: 14 }}>📰</div>
+                <h3 style={{ fontSize: 19, fontWeight: 700, color: "#fff", margin: "0 0 8px" }}>Learn English with Real News</h3>
+                <p style={{ fontSize: 13, color: "#777", lineHeight: 1.7, margin: "0 0 22px" }}>Pick a category & level, then tap<br />"Get Today's News" to start</p>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, maxWidth: 320, margin: "0 auto" }}>
+                  {["🔤 Vocabulary", "📐 Grammar", "🇯🇵 Translation", "✅ Quiz"].map((t, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.03)", padding: "9px 12px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.05)" }}>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: "#999" }}>{t}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </main>
+        </div>
+      );
+    }
+
+    /* ── Lesson View ── */
+    function LessonView({ lesson, onBack }) {
+      const [qa, setQa] = useState({});
+      const [qc, setQc] = useState({});
+      const check = (qi, oi) => { if (qc[qi] !== undefined) return; setQa(p => ({ ...p, [qi]: oi })); setQc(p => ({ ...p, [qi]: oi === lesson.quiz[qi].answer })); };
+
+      return (
+        <div className="fade-up">
+          <button onClick={onBack} style={S.back}>← Back to Headlines</button>
+
+          {/* Hero image */}
+          {lesson.image && <img src={lesson.image} alt="" className="img-hero" onError={(e) => e.target.style.display = 'none'} />}
+
+          <Sec tag="NEWS ARTICLE">
+            {lesson.source && <div style={{ fontSize: 11, color: "#e94560", fontWeight: 700, marginBottom: 6, textTransform: "uppercase", letterSpacing: 1 }}>{lesson.source}</div>}
+            <h2 style={{ fontSize: 20, fontWeight: 800, lineHeight: 1.35, color: "#fff", margin: "0 0 14px" }}>{lesson.headline}</h2>
+            <div style={S.body}>{lesson.body}</div>
+          </Sec>
+
+          <Sec tag="JAPANESE TRANSLATION" color="#f59e0b">
+            <div style={S.trans}>{lesson.translation}</div>
+          </Sec>
+
+          <Sec tag="KEY VOCABULARY" color="#e94560">
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {(lesson.vocabulary || []).map((v, i) => (
+                <div key={i} style={S.vCard}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                    <span style={{ fontSize: 16, fontWeight: 800, color: "#fff" }}>{v.word}</span>
+                    <span style={S.pos}>{v.pos}</span>
+                  </div>
+                  <div style={{ fontSize: 12, color: "#e94560", fontWeight: 600, marginBottom: 3 }}>{v.pronunciation}</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: "#ccc", marginBottom: 6 }}>{v.meaning}</div>
+                  {v.example && <div style={S.ex}><span style={{ fontWeight: 700, color: "#e94560", marginRight: 5, fontStyle: "normal" }}>Ex.</span>{v.example}</div>}
+                </div>
+              ))}
+            </div>
+          </Sec>
+
+          <Sec tag="GRAMMAR POINTS" color="#818cf8">
+            {(lesson.grammar || []).map((g, i) => (
+              <div key={i} style={S.gCard}>
+                <div style={{ fontSize: 15, fontWeight: 800, color: "#818cf8", marginBottom: 8 }}>{g.pattern}</div>
+                <div style={S.gSent}>"{g.sentence}"</div>
+                <div style={{ fontSize: 13, color: "#bbb", lineHeight: 1.65, marginBottom: 5 }}><strong style={{ color: "#ddd" }}>Structure:</strong> {g.breakdown}</div>
+                <div style={{ fontSize: 13, color: "#999", lineHeight: 1.65 }}>{g.explanation}</div>
+              </div>
+            ))}
+          </Sec>
+
+          {lesson.quiz?.length > 0 && (
+            <Sec tag="COMPREHENSION QUIZ" color="#10b981">
+              {lesson.quiz.map((q, qi) => (
+                <div key={qi} style={S.qBlock}>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: "#e8e8e8", marginBottom: 10, lineHeight: 1.5 }}>Q{qi + 1}. {q.question}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {q.options.map((o, oi) => {
+                      const rev = qc[qi] !== undefined;
+                      const ok = rev && oi === q.answer;
+                      const bad = qa[qi] === oi && rev && !ok;
+                      return (
+                        <button key={oi} className="qopt" onClick={() => check(qi, oi)}
+                          style={{ ...S.qOpt, ...(ok ? { borderColor: "#10b981", background: "rgba(16,185,129,0.1)" } : {}), ...(bad ? { borderColor: "#ef4444", background: "rgba(239,68,68,0.1)" } : {}) }}>
+                          <span style={{ fontWeight: 800, color: "#555", fontSize: 12, minWidth: 20 }}>{String.fromCharCode(65 + oi)}</span>{o}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {qc[qi] !== undefined && (
+                    <div style={{ marginTop: 10, padding: "10px 14px", borderRadius: 10, fontSize: 13, lineHeight: 1.55, background: qc[qi] ? "rgba(16,185,129,0.08)" : "rgba(239,68,68,0.08)", border: `1px solid ${qc[qi] ? "rgba(16,185,129,0.25)" : "rgba(239,68,68,0.25)"}` }}>
+                      <strong>{qc[qi] ? "✅ Correct!" : "❌ Incorrect"}</strong>
+                      <p style={{ margin: "4px 0 0", color: "#999" }}>{q.explanation}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </Sec>
+          )}
+        </div>
+      );
+    }
+
+    function Sec({ tag, color = "#e94560", children }) {
+      return (
+        <section style={S.sec}>
+          <div style={{ fontSize: 10, fontWeight: 800, color, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>{tag}</div>
+          {children}
+        </section>
+      );
+    }
+
+    const S = {
+      label: { fontSize: 11, fontWeight: 700, color: "#555", textTransform: "uppercase", letterSpacing: 1.5, marginBottom: 7, display: "block" },
+      pill: { border: "1.5px solid rgba(255,255,255,0.1)", background: "transparent", borderRadius: 22, padding: "7px 16px", fontSize: 13, cursor: "pointer", fontWeight: 500, color: "#999" },
+      pillOn: { background: "linear-gradient(135deg,#e94560,#c62d48)", color: "#fff", borderColor: "#e94560", fontWeight: 700, boxShadow: "0 2px 12px rgba(233,69,96,0.25)" },
+      btn: { width: "100%", padding: "13px 0", background: "linear-gradient(135deg,#e94560,#c62d48)", color: "#fff", border: "none", borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: "pointer", letterSpacing: 0.5, boxShadow: "0 4px 18px rgba(233,69,96,0.25)", transition: "all 0.25s" },
+      error: { background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#fca5a5", padding: "10px 14px", borderRadius: 12, fontSize: 13, marginBottom: 16 },
+      secHead: { fontSize: 12, fontWeight: 800, color: "#e94560", textTransform: "uppercase", letterSpacing: 3, marginBottom: 14 },
+      aCard: { display: "block", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 14, marginBottom: 14, cursor: "pointer", width: "100%", textAlign: "left", overflow: "hidden", animation: "fadeUp 0.4s ease-out both" },
+      srcTag: { fontSize: 10, background: "rgba(233,69,96,0.12)", color: "#e94560", padding: "2px 9px", borderRadius: 10, fontWeight: 700 },
+      topicTag: { fontSize: 10, background: "rgba(139,92,246,0.12)", color: "#a78bfa", padding: "2px 9px", borderRadius: 10, fontWeight: 600 },
+      emptyBox: { textAlign: "center", padding: 44, background: "rgba(255,255,255,0.02)", borderRadius: 16, border: "1px solid rgba(255,255,255,0.05)" },
+      back: { background: "none", border: "none", color: "#e94560", fontWeight: 700, fontSize: 13, cursor: "pointer", padding: "4px 0", marginBottom: 14 },
+      sec: { background: "rgba(255,255,255,0.025)", borderRadius: 16, padding: 20, marginBottom: 14, border: "1px solid rgba(255,255,255,0.05)" },
+      body: { fontSize: 15, lineHeight: 1.85, color: "#ccc", background: "rgba(255,255,255,0.025)", padding: 16, borderRadius: 12, borderLeft: "3px solid #e94560" },
+      trans: { fontSize: 14, lineHeight: 1.75, color: "#bbb", background: "rgba(245,158,11,0.05)", padding: 16, borderRadius: 12, borderLeft: "3px solid rgba(245,158,11,0.35)" },
+      vCard: { background: "rgba(255,255,255,0.025)", borderRadius: 12, padding: 14, borderLeft: "3px solid rgba(233,69,96,0.4)" },
+      pos: { fontSize: 10, color: "#777", background: "rgba(255,255,255,0.05)", padding: "2px 7px", borderRadius: 4 },
+      ex: { fontSize: 12, color: "#888", fontStyle: "italic", lineHeight: 1.55, background: "rgba(255,255,255,0.025)", padding: "7px 11px", borderRadius: 8 },
+      gCard: { background: "rgba(255,255,255,0.025)", borderRadius: 12, padding: 14, marginBottom: 10, borderLeft: "3px solid rgba(99,102,241,0.4)" },
+      gSent: { fontSize: 14, fontStyle: "italic", color: "#ddd", background: "rgba(255,255,255,0.03)", padding: "9px 13px", borderRadius: 8, marginBottom: 8, lineHeight: 1.55 },
+      qBlock: { background: "rgba(255,255,255,0.025)", borderRadius: 12, padding: 14, marginBottom: 10 },
+      qOpt: { display: "flex", alignItems: "center", gap: 10, background: "transparent", border: "1.5px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: "11px 14px", cursor: "pointer", fontSize: 13, color: "#ccc", textAlign: "left", lineHeight: 1.4 },
+    };
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
