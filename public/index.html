@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily News English — Learn English Through Today's Headlines</title>
-  <meta name="description" content="Learn English through today's real news. Vocabulary, grammar, translation, and quizzes — CNN English Express style." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>" />
+  <title>Daily News English â€” Learn English Through Today's Headlines</title>
+  <meta name="description" content="Learn English through today's real news. Vocabulary, grammar, translation, and quizzes â€” CNN English Express style." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ðŸ“°</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Source+Sans+3:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -41,7 +41,7 @@
     .spinner { display: inline-block; animation: spin 0.8s linear infinite; }
     .fade-up { animation: fadeUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
 
-    /* ── Header ── */
+    /* â”€â”€ Header â”€â”€ */
     .header {
       background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
       color: var(--white);
@@ -110,7 +110,7 @@
       background: linear-gradient(90deg, var(--accent-gold), var(--red-light), var(--red), var(--red-dark));
     }
 
-    /* ── Controls ── */
+    /* â”€â”€ Controls â”€â”€ */
     .controls {
       max-width: 780px;
       margin: 0 auto;
@@ -171,7 +171,7 @@
     .fetch-btn:hover { box-shadow: 0 6px 20px rgba(204,0,0,0.3); transform: translateY(-1px); }
     .fetch-btn:disabled { opacity: 0.6; transform: none; }
 
-    /* ── Main Content ── */
+    /* â”€â”€ Main Content â”€â”€ */
     .main { max-width: 780px; margin: 0 auto; padding: 0 20px 60px; }
 
     .error-bar {
@@ -185,7 +185,7 @@
       margin-bottom: 20px;
     }
 
-    /* ── Headlines Section ── */
+    /* â”€â”€ Headlines Section â”€â”€ */
     .section-header {
       display: flex;
       align-items: center;
@@ -206,7 +206,7 @@
       letter-spacing: -0.3px;
     }
 
-    /* ── Article Card ── */
+    /* â”€â”€ Article Card â”€â”€ */
     .article-card {
       display: flex;
       background: var(--white);
@@ -278,7 +278,7 @@
       gap: 4px;
     }
 
-    /* ── Empty State ── */
+    /* â”€â”€ Empty State â”€â”€ */
     .empty-state {
       text-align: center;
       padding: 60px 20px;
@@ -307,7 +307,7 @@
       color: var(--gray-700);
     }
 
-    /* ── Loading ── */
+    /* â”€â”€ Loading â”€â”€ */
     .loading-box {
       text-align: center;
       padding: 50px 20px;
@@ -336,7 +336,7 @@
       animation: shimmer 1.5s ease-in-out infinite;
     }
 
-    /* ── Lesson View ── */
+    /* â”€â”€ Lesson View â”€â”€ */
     .back-btn {
       background: none;
       border: none;
@@ -560,7 +560,7 @@
     .quiz-feedback strong { display: block; margin-bottom: 4px; }
     .quiz-feedback p { color: var(--gray-700); margin: 0; font-family: 'Noto Sans JP', 'Source Sans 3', sans-serif; }
 
-    /* ── Responsive ── */
+    /* â”€â”€ Responsive â”€â”€ */
     @media (max-width: 480px) {
       .article-card { flex-direction: column; }
       .article-img, .article-img-placeholder { width: 100%; min-height: 180px; height: 180px; }
@@ -578,10 +578,10 @@
     const { useState, useCallback } = React;
 
     const CATEGORIES = [
-      { id: "world", label: "World", emoji: "🌍" },
-      { id: "business", label: "Business", emoji: "💼" },
-      { id: "tech", label: "Tech", emoji: "🔬" },
-      { id: "sports", label: "Sports", emoji: "⚽" },
+      { id: "world", label: "World", emoji: "ðŸŒ" },
+      { id: "business", label: "Business", emoji: "ðŸ’¼" },
+      { id: "tech", label: "Tech", emoji: "ðŸ”¬" },
+      { id: "sports", label: "Sports", emoji: "âš½" },
     ];
     const LEVELS = [
       { id: "beginner", label: "Beginner" },
@@ -618,5 +618,4 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ article, level }),
           });
-          const data = await res.json();
-          if (data.error) throw new Error(data.er
+    
